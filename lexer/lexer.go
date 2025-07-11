@@ -88,10 +88,10 @@ func (l *Lexer) NextToken() token.Token {
 		tok.Type = token.EOF
 	default:
 		if isLetter(l.ch) {
+			// covers identifiers (funcs, vars)
 			tok.Literal = l.readIdentifier()
 			tok.Type = token.LookupIdent(tok.Literal)
-			// read identifier calls readChar() so we have to exit early
-			return tok
+			return tok // read identifier calls readChar() so we have to exit early
 		} else if isDigit(l.ch) {
 			tok.Type = token.INT
 			tok.Literal = l.readNumber()
